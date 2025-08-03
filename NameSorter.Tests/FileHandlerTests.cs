@@ -5,7 +5,7 @@ namespace NameSorter.Tests
     public class FileHandlerTests
     {
         [Fact]
-        public void WhenReadLinesCalledWithBadPath_ShouldThrowFileNotFoundException()
+        public void ReadLinesCalledWithBadPath_ShouldThrowFileNotFoundException()
         {
             var fileHandler = new FileHandler();
 
@@ -13,11 +13,28 @@ namespace NameSorter.Tests
         }
 
         [Fact]
-        public void WhenReadLinesCalledWithEmptyPath_ShouldThrowArgumentException()
+        public void ReadLinesCalledWithEmptyPath_ShouldThrowArgumentException()
         {
             var fileHandler = new FileHandler();
 
             Assert.Throws<ArgumentException>(() => fileHandler.ReadLines(""));
+        }
+
+        [Fact]
+        public void ReadLines_HandlesUnicodeCharacters()
+        {
+            var fileHandler = new FileHandler();
+
+            var tempFilePath = Path.GetTempFileName();
+            File.WriteAllLines(tempFilePath,
+                [
+                    "Robert O’Martin"
+                ]
+            );
+
+            var lines = fileHandler.ReadLines(tempFilePath);
+
+            Assert.Equal("Robert O’Martin", lines.ElementAt(0));
         }
 
         [Fact]
@@ -40,6 +57,23 @@ namespace NameSorter.Tests
             Assert.Equal(2, lines.Count());
             Assert.Equal("Robert Martin", lines.ElementAt(0));
             Assert.Equal("Bob Martin", lines.ElementAt(1));
+
+            File.Delete(tempFilePath);
+        }
+
+        [Fact]
+        public void ReadLines_ThrowsExceptionIfFileIsEmpty()
+        {
+            var tempFilePath = Path.GetTempFileName();
+            File.WriteAllLines(tempFilePath, [" "]);
+
+            var fileHandler = new FileHandler();
+
+            Assert.Throws<Exception>(() => 
+            { 
+                var lines = fileHandler.ReadLines(tempFilePath);
+            
+            });
 
             File.Delete(tempFilePath);
         }
