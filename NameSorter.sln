@@ -9,7 +9,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NameSorter.Tests", "NameSor
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{77F505E1-60F2-49A8-9251-0B22282D5546}"
 	ProjectSection(SolutionItems) = preProject
-		create-release.yml = create-release.yml
 		.github\workflows\pr-build.yml = .github\workflows\pr-build.yml
 	EndProjectSection
 EndProject
@@ -38,5 +37,8 @@ Global
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{77F505E1-60F2-49A8-9251-0B22282D5546} = {D895A698-91EC-40A8-BC43-52707628D9E7}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {D88F3A41-06C2-426E-88DD-3859496E6259}
 	EndGlobalSection
 EndGlobal
