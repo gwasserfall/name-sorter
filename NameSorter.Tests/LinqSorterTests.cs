@@ -1,10 +1,20 @@
 ﻿using System.Linq;
+using System.Reflection;
+using System.Text;
 using NameSorter.SortingStrategies;
 
 namespace NameSorter.Tests
 {
     public class LinqSorterTests
     {
+        private string[] LoadTestNames(string fileName)
+        {
+            var assemblyDir = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)!;
+            var solutionRoot = Path.GetFullPath(Path.Combine(assemblyDir, "../../../.."));
+            var filePath = Path.Combine(solutionRoot, "NameLists", fileName);
+            return File.ReadAllLines(filePath, Encoding.UTF8);
+        }
+
         [Fact]
         public void Sort_SimpleSortOutputsExpectedResult() 
         {
@@ -64,6 +74,34 @@ namespace NameSorter.Tests
                     "Hunter Uriah Mathew Clarke",
                     "Hunter Uriah Mathews Clarke",
                 ];
+
+            LinqSorter sorter = new LinqSorter();
+
+            var sorted = sorter.Sort(unsorted);
+
+            Assert.Equal(expected, sorted.ToArray());
+        }
+
+        [Fact]
+        public void Sort_BaselineSortedCorrectly()
+        {
+            string[] unsorted = LoadTestNames("baseline-unsorted.txt");
+
+            string[] expected = LoadTestNames("baseline-sorted.txt");
+
+            LinqSorter sorter = new LinqSorter();
+
+            var sorted = sorter.Sort(unsorted);
+
+            Assert.Equal(expected, sorted.ToArray());
+        }
+
+        [Fact]
+        public void Sort_OneThousandSortedCorrectly()
+        {
+            string[] unsorted = LoadTestNames("1000-unsorted.txt");
+
+            string[] expected = LoadTestNames("1000-sorted.txt");
 
             LinqSorter sorter = new LinqSorter();
 

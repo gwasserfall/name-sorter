@@ -21,6 +21,7 @@ namespace NameSorter
 
             var sorted = _sorter.Sort(unsorted);
 
+            Console.OutputEncoding = System.Text.Encoding.UTF8;
             foreach (var line in sorted)
             {
                 Console.WriteLine(line);

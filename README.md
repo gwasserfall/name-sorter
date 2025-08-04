@@ -1,5 +1,7 @@
 ### NameSorter
 
+[![.NET Build and Test](https://github.com/gwasserfall/name-sorter/actions/workflows/pr-build.yml/badge.svg)](https://github.com/gwasserfall/name-sorter/actions/workflows/pr-build.yml)
+
 A small cli application to sort a name of lists in text file. Names will be sorted
 by last name first, then given name
 
