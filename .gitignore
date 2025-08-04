@@ -3,6 +3,9 @@
 ##
 ## Get latest from `dotnet new gitignore`
 
+name-sorter.exe
+**/sorted-names-list.txt
+
 # dotenv files
 .env
 

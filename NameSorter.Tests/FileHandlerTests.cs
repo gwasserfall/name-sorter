@@ -5,15 +5,18 @@ namespace NameSorter.Tests
     public class FileHandlerTests
     {
         [Fact]
-        public void ReadLinesCalledWithBadPath_ShouldThrowFileNotFoundException()
+        public void ReadLines_CalledWithBadPath_ShouldThrowFileNotFoundException()
         {
             var fileHandler = new FileHandler();
 
-            Assert.Throws<FileNotFoundException>(() => fileHandler.ReadLines("/fake/file/path.txt"));
+            var ex = Assert.Throws<FileNotFoundException>(() => fileHandler.ReadLines("/fake/file/path.txt"));
+
+            Assert.Equal("File not found.\n\nUsage: ./name-sorter.exe <path-to-name-list.txt>", ex.Message);
+
         }
 
         [Fact]
-        public void ReadLinesCalledWithEmptyPath_ShouldThrowArgumentException()
+        public void ReadLines_CalledWithEmptyPath_ShouldThrowArgumentException()
         {
             var fileHandler = new FileHandler();
 
@@ -69,11 +72,13 @@ namespace NameSorter.Tests
 
             var fileHandler = new FileHandler();
 
-            Assert.Throws<Exception>(() => 
+            var ex = Assert.Throws<Exception>(() => 
             { 
                 var lines = fileHandler.ReadLines(tempFilePath);
             
             });
+
+            Assert.Equal("Provided file does not contain any names.", ex.Message);
 
             File.Delete(tempFilePath);
         }

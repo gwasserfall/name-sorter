@@ -2,22 +2,42 @@
 
 [![.NET Build and Test](https://github.com/gwasserfall/name-sorter/actions/workflows/pr-build.yml/badge.svg)](https://github.com/gwasserfall/name-sorter/actions/workflows/pr-build.yml)
 
-A small cli application to sort a name of lists in text file. Names will be sorted
-by last name first, then given name
-
+A small CLI application that sorts names in a text file. Names are sorted by **last name** first, then **given names**.
+The sorted list is written to sorted-names-list.txt and also printed to stdout.
 
 #### Usage
 
-`./name-sorter.exe ./unsorted-names.txt`
+```
+./name-sorter.exe ./Namelists/baseline-unsorted.txt
 
-This will output the sorted names to stdout and write the names to an output file in the same directory
-`sorted-names-list.txt`
+Alice James
+Mary Jane
+John Wilkens
+```
+
+Input file should contain one name per line e.g.
+
+```
+Wayne Norton
+Yehuda Anders
+Layton Nolan
+Iker JoJo Wilkens
+Ada Norris
+Haley Nunez
+Rhett Chuck Norris
+Alisson Nolan
+```
+
 
 #### Build from source
 
-`dotnet restore`
+Requires [.NET 8 SDK](https://dotnet.microsoft.com/en-us/download) or later.
 
-`dotnet build --configuration Release`
+```
+dotnet restore
+```
 
-`cp NameSorter/bin/Release/net8.0/name-sorter.exe ./`
+```
+dotnet publish ./NameSorter/NameSorter.csproj -c Release -r win-x64 --self-contained false /p:PublishSingleFile=true /p:DebugType=none -o .
+```
 

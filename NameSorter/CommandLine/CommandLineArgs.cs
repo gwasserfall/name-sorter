@@ -11,7 +11,7 @@ namespace NameSorter.CommandLine
         public Options Parse(string[] args)
         {
             if (args.Length < 1)
-                throw new ArgumentException("Missing file path.");
+                throw new ArgumentException("No file path provided.\n\nUsage: ./name-sorter.exe <path-to-name-list.txt>");
 
             return new() { FilePath = args[0] };
         }

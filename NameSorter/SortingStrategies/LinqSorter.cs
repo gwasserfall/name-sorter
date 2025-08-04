@@ -14,6 +14,9 @@ namespace NameSorter.SortingStrategies
     {
         public IEnumerable<string> Sort(IEnumerable<string> unsorted)
         {
+            if (unsorted == null || unsorted.Count() < 1)
+                throw new Exception("Nothing to sort.");
+
             return unsorted.OrderBy(GetSortingKey);
         }
 
