@@ -15,6 +15,35 @@ namespace NameSorter.Tests
             return File.ReadAllLines(filePath, Encoding.UTF8);
         }
 
+
+        [Fact]
+        public void Sort_CalledWithEmptyCollection_ThrowsException()
+        {
+            string[] empty = [];
+
+            LinqSorter sorter = new LinqSorter();
+
+            var ex = Assert.Throws<Exception>(() => 
+            { 
+                var sorted = sorter.Sort(empty);            
+            });
+
+            Assert.Equal("Nothing to sort.", ex.Message);
+        }
+
+        [Fact]
+        public void Sort_LastNamesOnly_SortsCorrectly()
+        {
+            string[] unsorted = ["Wasserfall", "Mardon"];
+            string[] expected = ["Mardon", "Wasserfall"];
+
+            LinqSorter sorter = new LinqSorter();
+
+            var sorted = sorter.Sort(unsorted);
+            
+            Assert.Equal(expected, sorted);
+        }
+
         [Fact]
         public void Sort_SimpleSortOutputsExpectedResult() 
         {
