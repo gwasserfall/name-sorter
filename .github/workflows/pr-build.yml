@@ -5,7 +5,7 @@ name: .NET Build and Test
 
 on:
   push:
-    branches: [ "feature/*", "main" ]
+    branches: [ "feature/*" ]
   pull_request:
     branches: [ "main" ]
 
