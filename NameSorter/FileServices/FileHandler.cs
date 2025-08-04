@@ -13,6 +13,9 @@ namespace NameSorter.FileServices
             if (string.IsNullOrEmpty(filePath))
                 throw new ArgumentException("File path cannot be blank.");
 
+            if (Path.GetExtension(filePath).ToLowerInvariant() != ".txt")
+                throw new Exception("Invalid file extension. Only .txt files are supported.");
+
             if (!File.Exists(filePath))
                 throw new FileNotFoundException("File not found.\n\nUsage: ./name-sorter.exe <path-to-name-list.txt>");
 

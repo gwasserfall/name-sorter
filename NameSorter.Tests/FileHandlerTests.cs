@@ -4,6 +4,8 @@ namespace NameSorter.Tests
 {
     public class FileHandlerTests
     {
+        string GetTempTxtFilePath() => Path.GetTempFileName() + ".txt";
+
         [Fact]
         public void ReadLines_CalledWithBadPath_ShouldThrowFileNotFoundException()
         {
@@ -12,7 +14,16 @@ namespace NameSorter.Tests
             var ex = Assert.Throws<FileNotFoundException>(() => fileHandler.ReadLines("/fake/file/path.txt"));
 
             Assert.Equal("File not found.\n\nUsage: ./name-sorter.exe <path-to-name-list.txt>", ex.Message);
+        }
 
+        [Fact]
+        public void ReadLines_CalledWithNonTxtExt_ThrowsException()
+        {
+            var fileHandler = new FileHandler();
+
+            var ex = Assert.Throws<Exception>(() => fileHandler.ReadLines("./path.xlsx"));
+
+            Assert.Equal("Invalid file extension. Only .txt files are supported.", ex.Message);
         }
 
         [Fact]
@@ -28,7 +39,7 @@ namespace NameSorter.Tests
         {
             var fileHandler = new FileHandler();
 
-            var tempFilePath = Path.GetTempFileName();
+            var tempFilePath = GetTempTxtFilePath();
             File.WriteAllLines(tempFilePath,
                 [
                     "Robert O’Martin"
@@ -43,7 +54,7 @@ namespace NameSorter.Tests
         [Fact]
         public void ReadLines_ReturnsTrimmedNonEmptyLines()
         {
-            var tempFilePath = Path.GetTempFileName();
+            var tempFilePath = GetTempTxtFilePath();
             File.WriteAllLines(tempFilePath, 
                 [
                     "Robert Martin",
@@ -67,7 +78,7 @@ namespace NameSorter.Tests
         [Fact]
         public void ReadLines_ThrowsExceptionIfFileIsEmpty()
         {
-            var tempFilePath = Path.GetTempFileName();
+            var tempFilePath = GetTempTxtFilePath();
             File.WriteAllLines(tempFilePath, [" "]);
 
             var fileHandler = new FileHandler();
